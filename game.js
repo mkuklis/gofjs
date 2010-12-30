@@ -4,6 +4,8 @@
  * Released under the MIT and GPL licenses.
  */
 
+// TODO explore http://en.wikipedia.org/wiki/Hashlife
+
 // cell constructor
 function Cell(props) {
   var that = this,
