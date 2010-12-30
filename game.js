@@ -49,7 +49,7 @@ function Cell(props) {
     }
     else {
       // perfect conditions for being alive :)
-      if (alive == 2 || alive == 3) tmpPop();
+      if (alive == 3) tmpPop();
     } 
   }
   
@@ -71,7 +71,7 @@ function Cell(props) {
     }
   }
 
-  this.isTmpDied = function() {
+  this.isTmpDead = function() {
     if (_tmpDie == true) {
       that.die();
     }
@@ -100,7 +100,7 @@ function Game() {
     $('.cell').each(function(){
       var cell = $(this).data('cell');
       cell.isTmpPopulated();
-      cell.isTmpDied();
+      cell.isTmpDead();
     });
     $.event.trigger('tick');
   };
@@ -121,6 +121,16 @@ function Game() {
   // populate few cells
   board[15][14].populate();
   board[15][15].populate();
+  board[14][15].populate();
+  board[15][16].populate();
+
+  board[15][44].populate();
+  board[15][45].populate();
+  board[14][45].populate();
+  board[13][45].populate();
+  board[12][45].populate();
+  board[15][46].populate();
+  
   board[30][29].populate();
   board[30][30].populate();
   board[29][30].populate();
