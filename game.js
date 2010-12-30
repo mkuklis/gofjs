@@ -1,6 +1,5 @@
 /*
- * simple implementation of game of life
- 
+ * simple implementation of game of life http://en.wikipedia.org/wiki/Conway's_Game_of_Life
  * Copyright 2010 Michal Kuklis
  * Released under the MIT and GPL licenses.
  */
@@ -118,6 +117,7 @@ function Game() {
   }
 
   setInterval(tick, 1000);
+  
   // populate few cells
   board[15][14].populate();
   board[15][15].populate();
