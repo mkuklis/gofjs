@@ -1,1 +1,2 @@
-Simple implementation of game of life http://en.wikipedia.org/wiki/Conway's_Game_of_Life in JS 
+Simple implementation of game of life http://en.wikipedia.org/wiki/Conway's_Game_of_Life in Javascript
+demo: http://dl.dropbox.com/u/1250820/games/goljs/index.html
