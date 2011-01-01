@@ -8,13 +8,10 @@
 
 // cell constructor
 function Cell(props) {
-  var that = this,
-    ui = props.ui,
-    x = props.x,
+
+ var x = props.x,
     y = props.y,
-    _populated = false,
-    _tmpPopulated = false,
-    _tmpDie = false,
+    that = this,
     neighbors = [
       {x:x-1, y:y-1}, 
       {x:x-1, y:y}, 
@@ -24,13 +21,18 @@ function Cell(props) {
       {x:x+1, y:y-1},
       {x:x+1, y:y},
       {x:x+1, y:y+1}];
-
+  
+  this.ui = props.ui;   
+  this._populated = false;
+  this._tmpPopulated = false;
+  this._tmpDie = false;
+  
   function tmpPop() {
-    _tmpPopulated = true;
+    that._tmpPopulated = true;
   }
 
   function tmpDie() {
-    _tmpDie = true;
+    that._tmpDie = true;
   }
 
   function checkRules() { 
@@ -43,7 +45,7 @@ function Cell(props) {
         }
       }
     });
-
+    
     if (that.populated()) {
       // cell dies from being lonely or from overpopulation :(
       if (alive <= 1 || alive >= 4) tmpDie();
@@ -53,44 +55,50 @@ function Cell(props) {
       if (alive == 3) tmpPop();
     } 
   }
-  
-  this.die = function() {
-    _populated = false;
-    _tmpDie = false;
-    ui.removeClass('populated');
-  }
 
-  this.populate = function() {
-    _populated = true;
-    _tmpPopulated = false;
-    ui.addClass('populated');  
-  }
-
-  this.isTmpPopulated = function() {
-    if (_tmpPopulated) {
-      that.populate();
-    }
-  }
-
-  this.isTmpDead = function() {
-    if (_tmpDie == true) {
-      that.die();
-    }
-  }
-
-  this.populated = function() {
-    return _populated;
-  }
-
-  ui.bind('tick', function() {
+  this.ui.bind('tick', function() {
     checkRules();
   });
 
-  ui.bind('click', function() {
-    _populated = true;
-    _tmpPopulated = true;
-    ui.addClass('populated');   
+  this.ui.bind('click', function() {
+    that._populated = true;
+    that._tmpPopulated = true;
+    that.ui.addClass('populated');   
   });
+}
+
+// Cell prototype
+Cell.prototype = {
+  // set constructor
+  constructor: Cell,
+  
+  die: function() {
+    this._populated = false;
+    this._tmpDie = false;
+    this.ui.removeClass('populated');
+  },
+
+  populate: function() {
+    this._populated = true;
+    this._tmpPopulated = false;
+    this.ui.addClass('populated');  
+  },
+
+  isTmpPopulated: function() {
+    if (this._tmpPopulated) {
+      this.populate();
+    }
+  },
+
+  isTmpDead: function() {
+    if (this._tmpDie == true) {
+      this.die();
+    }
+  },
+
+  populated: function() {
+    return this._populated;
+  }
 }
 
 // game constructor
@@ -119,12 +127,19 @@ function Game() {
   }
 
   setInterval(tick, 1000);
+
+  // sets Gospers glider gun
   
   // populate few cells
-  board[15][14].populate();
-  board[15][15].populate();
-  board[14][15].populate();
-  board[15][16].populate();
+  board[9][3].populate();
+  board[9][4].populate();
+  board[10][3].populate();
+  board[10][4].populate();
+
+  board[7][43].populate();
+  board[7][44].populate();
+  board[8][43].populate();
+  board[8][44].populate();
 
   board[15][44].populate();
   board[15][45].populate();
